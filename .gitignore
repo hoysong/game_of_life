@@ -1,3 +1,16 @@
+# Compiler and library output
 *.o
 *.a
+*.out
+a.out
+
+# Profiling output
+gmon.out
+
+# Editor temporary files
 *.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
