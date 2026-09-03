@@ -1,49 +1,51 @@
 # Game of Life
 
-C와 MiniLibX로 구현한 Conway's Game of Life 시뮬레이터입니다.  
-다음 세대는 순차적으로 계산하고, 배경·격자·셀 렌더링에는 POSIX 스레드를 사용합니다. 실행 중에는 셀과 색상 팔레트를 변경할 수 있습니다.
+[English](./README.md) | [한국어](./README.ko.md)
 
-![Game of Life 실행 화면](./video.gif)
+A Conway's Game of Life simulator implemented in C with MiniLibX.  
+Each next generation is calculated sequentially, while POSIX threads are used to render the background, grid, and cells. Cells and color palettes can be changed while the program is running.
 
-## 1. 주요 기능
+![Game of Life demo](./video.gif)
 
-- Conway's Game of Life 규칙에 따른 세대 갱신
-- 8개 스레드를 이용한 배경·격자·셀 렌더링
-- 랜덤 초기 맵 생성
-- `.gol` 파일을 이용한 사용자 정의 초기 맵 로드
-- 마우스를 이용한 실시간 셀 추가
-- 12가지 색상 팔레트 전환
+## 1. Features
 
-## 2. 프로젝트 배경
+- Generation updates based on Conway's Game of Life rules
+- Background, grid, and cell rendering with 8 threads
+- Random initial map generation
+- Custom initial map loading from a `.gol` file
+- Real-time cell insertion with the mouse
+- Switching between 12 color palettes
 
-이 프로젝트는 다음 프로젝트를 구현하며 쌓은 그래픽 처리, 맵 파싱, 멀티스레딩 경험을 바탕으로 만들었습니다.
+## 2. Project Background
 
-- [hoysong/cub3d](https://github.com/hoysong/cub3d) — MiniLibX를 활용한 그래픽 렌더링 및 이벤트 처리
-- [hoysong/fdf_fil_de_fer](https://github.com/hoysong/fdf_fil_de_fer) — 맵 파일 파싱 및 화면 시각화
-- [hoysong/philo](https://github.com/hoysong/philo) — POSIX 스레드와 뮤텍스를 이용한 동시성 제어
+This project builds on the graphics, map parsing, and multithreading experience gained from the following projects:
 
-## 3. 실행 환경
+- [hoysong/cub3d](https://github.com/hoysong/cub3d) — Graphics rendering and event handling with MiniLibX
+- [hoysong/fdf_fil_de_fer](https://github.com/hoysong/fdf_fil_de_fer) — Map-file parsing and visualization
+- [hoysong/philo](https://github.com/hoysong/philo) — Concurrency control using POSIX threads and mutexes
 
-이 프로젝트는 Linux와 X11 환경을 기준으로 작성되었습니다.
+## 3. Environment
 
-필요한 도구와 라이브러리는 다음과 같습니다.
+This project targets Linux and X11.
 
-- C 컴파일러(`cc`)
+Required tools and libraries:
+
+- A C compiler (`cc`)
 - `make`
 - POSIX Threads
-- X11 및 Xext 개발 라이브러리
-- zlib 및 BSD 호환 라이브러리
+- X11 and Xext development libraries
+- zlib and a BSD compatibility library
 
-Ubuntu/Debian 계열에서는 다음 명령으로 의존성을 설치할 수 있습니다.
+On Ubuntu or Debian-based systems, install the dependencies with:
 
 ```bash
 sudo apt update
 sudo apt install build-essential xorg libx11-dev libxext-dev zlib1g-dev libbsd-dev
 ```
 
-## 4. 빌드
+## 4. Build
 
-저장소를 받은 뒤 각 정적 라이브러리와 실행 파일을 순서대로 빌드합니다.
+Clone the repository, then build the static libraries and executable in order:
 
 ```bash
 cd my_game_of_life
@@ -52,46 +54,46 @@ make -C minilibx-linux
 sh compile.sh
 ```
 
-빌드가 완료되면 현재 디렉터리에 `a.out`이 생성됩니다.
+After the build completes, an `a.out` executable is created in the current directory.
 
-## 5. 실행
+## 5. Run
 
-### 5.1 랜덤 맵으로 실행
+### 5.1 Random map
 
-인자 없이 실행하면 화면 크기에 맞춘 랜덤 맵을 생성합니다.
+Run without arguments to generate a random map sized to the screen:
 
 ```bash
 ./a.out
 ```
 
-### 5.2 맵 파일로 실행
+### 5.2 Map file
 
-초기 상태가 정의된 `.gol` 파일의 경로를 인자로 전달할 수 있습니다.
+Pass the path to a `.gol` file containing an initial state:
 
 ```bash
 ./a.out test.gol
 ```
 
-저장소에는 `test.gol`, `test2.gol`, `tornado.gol` 예제가 포함되어 있습니다.
+The repository includes `test.gol`, `test2.gol`, and `tornado.gol` as examples.
 
-## 6. 조작법
+## 6. Controls
 
-| 입력 | 동작 |
+| Input | Action |
 | --- | --- |
-| 마우스 이동 | 포인터 주변에 살아 있는 셀 추가 |
-| `←` / `→` | 이전/다음 색상 팔레트 선택 |
-| `Esc` | 프로그램 종료 |
-| 창 닫기 버튼 | 프로그램 종료 |
+| Mouse movement | Add live cells around the pointer |
+| `←` / `→` | Select the previous or next color palette |
+| `Esc` | Exit the program |
+| Window close button | Exit the program |
 
-## 7. 맵 파일 형식
+## 7. Map File Format
 
-맵 파일은 같은 길이의 문자열을 행 단위로 작성합니다.
+A map file contains equal-length strings, one row per line.
 
-- `0`: 죽은 셀
-- `1`: 살아 있는 셀
-- 모든 행의 길이는 같아야 합니다.
+- `0`: dead cell
+- `1`: live cell
+- Every row must have the same length.
 
-예를 들어 글라이더는 다음과 같이 표현할 수 있습니다.
+Example glider:
 
 ```text
 00000
@@ -101,43 +103,44 @@ sh compile.sh
 00000
 ```
 
-맵의 가로·세로 크기에 셀 한 칸의 픽셀 크기를 곱한 값이 실행 창의 크기가 됩니다.
+The window dimensions are calculated by multiplying the map width and height by the pixel size of one cell.
 
-## 8. 주요 설정
+## 8. Key Settings
 
-다음 값은 헤더 파일에서 변경할 수 있습니다.
+The following values can be changed in the header files:
 
-| 설정 | 위치 | 기본값 | 설명 |
+| Setting | Location | Default | Description |
 | --- | --- | ---: | --- |
-| `PIX_SIZE` | `gol_defs.h` | `5` | 셀 한 칸의 픽셀 크기 |
-| `NUM_OF_THREADS` | `gol_defs.h` | `8` | 렌더링에 사용할 스레드 수 |
-| `PALLETTE_COUNT` | `color_defs.h` | `12` | 사용할 수 있는 색상 팔레트 수 |
+| `PIX_SIZE` | `gol_defs.h` | `5` | Pixel size of one cell |
+| `NUM_OF_THREADS` | `gol_defs.h` | `8` | Number of rendering threads |
+| `PALLETTE_COUNT` | `color_defs.h` | `12` | Number of available color palettes |
 
-설정 변경 후에는 `sh compile.sh`로 실행 파일을 다시 빌드해야 합니다.
+Rebuild with `sh compile.sh` after changing these settings.
 
-## 9. 프로젝트 구조
+## 9. Project Structure
 
 ```text
 .
 ├── README.md
+├── README.ko.md
 ├── video.gif
 └── my_game_of_life
-    ├── main.c             # 프로그램 진입점과 입력 이벤트
-    ├── set_next_map.c     # 다음 세대 계산
-    ├── thread_setup.c     # 작업 스레드 설정
-    ├── img_hdlers.c       # MiniLibX 기반 렌더링
-    ├── gen_map.c          # 맵 파일 읽기
-    ├── no_arg_logics.c    # 랜덤 맵 생성
-    ├── color_defs.h       # 색상 팔레트
-    ├── my_libft           # 공용 C 유틸리티 라이브러리
+    ├── main.c             # Entry point and input events
+    ├── set_next_map.c     # Next-generation calculation
+    ├── thread_setup.c     # Rendering-thread setup
+    ├── img_hdlers.c       # MiniLibX-based rendering
+    ├── gen_map.c          # Map-file loading
+    ├── no_arg_logics.c    # Random map generation
+    ├── color_defs.h       # Color palettes
+    ├── my_libft           # Shared C utility library
     └── minilibx-linux     # MiniLibX
 ```
 
-## 10. Game of Life 규칙
+## 10. Game of Life Rules
 
-각 셀의 다음 상태는 주변 8개 셀을 기준으로 결정됩니다.
+The next state of each cell is determined by its eight neighbors.
 
-1. 살아 있는 셀은 이웃이 2개 미만이면 죽습니다.
-2. 살아 있는 셀은 이웃이 2개 또는 3개이면 생존합니다.
-3. 살아 있는 셀은 이웃이 3개를 초과하면 죽습니다.
-4. 죽은 셀은 이웃이 정확히 3개이면 살아납니다.
+1. A live cell dies if it has fewer than two live neighbors.
+2. A live cell survives if it has two or three live neighbors.
+3. A live cell dies if it has more than three live neighbors.
+4. A dead cell becomes alive if it has exactly three live neighbors.
