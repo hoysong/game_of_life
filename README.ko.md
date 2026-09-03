@@ -122,6 +122,7 @@ sh compile.sh
 ```text
 .
 ├── README.md
+├── README.ko.md
 ├── video.gif
 └── my_game_of_life
     ├── main.c             # 프로그램 진입점과 입력 이벤트
