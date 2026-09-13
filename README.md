@@ -16,7 +16,13 @@ Each next generation is calculated sequentially, while POSIX threads are used to
 - Real-time cell insertion with the mouse
 - Switching between 12 color palettes
 
-## 2. Project Background
+## 2. Rendering Performance Measurement
+
+During development, POSIX threads were applied progressively to the background, grid, and cell rendering stages. In one development-stage measurement under the recorded conditions, the elapsed time decreased from **1,528ms to 684ms**, a reduction of approximately **55.24%**.
+
+This result is not presented as a general-purpose benchmark. See [PERFORMANCE_MEASUREMENT.md](./PERFORMANCE_MEASUREMENT.md) for the measurement code, conditions, intermediate results, and limitations.
+
+## 3. Project Background
 
 This project builds on the graphics, map parsing, and multithreading experience gained from the following projects:
 
@@ -24,7 +30,7 @@ This project builds on the graphics, map parsing, and multithreading experience 
 - [hoysong/fdf_fil_de_fer](https://github.com/hoysong/fdf_fil_de_fer) — Map-file parsing and visualization
 - [hoysong/philo](https://github.com/hoysong/philo) — Concurrency control using POSIX threads and mutexes
 
-## 3. Environment
+## 4. Environment
 
 This project targets Linux and X11.
 
@@ -43,7 +49,7 @@ sudo apt update
 sudo apt install build-essential xorg libx11-dev libxext-dev zlib1g-dev libbsd-dev
 ```
 
-## 4. Build
+## 5. Build
 
 Clone the repository, then build the static libraries and executable in order:
 
@@ -56,9 +62,9 @@ sh compile.sh
 
 After the build completes, an `a.out` executable is created in the current directory.
 
-## 5. Run
+## 6. Run
 
-### 5.1 Random map
+### 6.1. Random map
 
 Run without arguments to generate a random map sized to the screen:
 
@@ -66,7 +72,7 @@ Run without arguments to generate a random map sized to the screen:
 ./a.out
 ```
 
-### 5.2 Map file
+### 6.2. Map file
 
 Pass the path to a `.gol` file containing an initial state:
 
@@ -76,7 +82,7 @@ Pass the path to a `.gol` file containing an initial state:
 
 The repository includes `test.gol`, `test2.gol`, and `tornado.gol` as examples.
 
-## 6. Controls
+## 7. Controls
 
 | Input | Action |
 | --- | --- |
@@ -85,7 +91,7 @@ The repository includes `test.gol`, `test2.gol`, and `tornado.gol` as examples.
 | `Esc` | Exit the program |
 | Window close button | Exit the program |
 
-## 7. Map File Format
+## 8. Map File Format
 
 A map file contains equal-length strings, one row per line.
 
@@ -105,7 +111,7 @@ Example glider:
 
 The window dimensions are calculated by multiplying the map width and height by the pixel size of one cell.
 
-## 8. Key Settings
+## 9. Key Settings
 
 The following values can be changed in the header files:
 
@@ -117,12 +123,13 @@ The following values can be changed in the header files:
 
 Rebuild with `sh compile.sh` after changing these settings.
 
-## 9. Project Structure
+## 10. Project Structure
 
 ```text
 .
 ├── README.md
 ├── README.ko.md
+├── PERFORMANCE_MEASUREMENT.md
 ├── video.gif
 └── my_game_of_life
     ├── main.c             # Entry point and input events
@@ -136,7 +143,7 @@ Rebuild with `sh compile.sh` after changing these settings.
     └── minilibx-linux     # MiniLibX
 ```
 
-## 10. Game of Life Rules
+## 11. Game of Life Rules
 
 The next state of each cell is determined by its eight neighbors.
 
