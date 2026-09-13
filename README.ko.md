@@ -16,7 +16,13 @@ C와 MiniLibX로 구현한 Conway's Game of Life 시뮬레이터입니다.
 - 마우스를 이용한 실시간 셀 추가
 - 12가지 색상 팔레트 전환
 
-## 2. 프로젝트 배경
+## 2. 렌더링 성능 측정
+
+개발 과정에서 배경, 그리드선, 셀 렌더링에 POSIX 스레드를 단계적으로 적용했습니다. 당시 기록된 조건에서 한 번씩 측정한 결과, 전체 반복 구간의 처리시간이 **1,528ms에서 684ms로 줄어 약 55.24% 단축**됐습니다.
+
+이 결과는 일반화된 성능 벤치마크가 아닙니다. 측정 코드, 조건, 중간 결과와 한계는 [성능 측정 기록](./PERFORMANCE_MEASUREMENT.md)에서 확인할 수 있습니다.
+
+## 3. 프로젝트 배경
 
 이 프로젝트는 다음 프로젝트를 구현하며 쌓은 그래픽 처리, 맵 파싱, 멀티스레딩 경험을 바탕으로 만들었습니다.
 
@@ -24,7 +30,7 @@ C와 MiniLibX로 구현한 Conway's Game of Life 시뮬레이터입니다.
 - [hoysong/fdf_fil_de_fer](https://github.com/hoysong/fdf_fil_de_fer) — 맵 파일 파싱 및 화면 시각화
 - [hoysong/philo](https://github.com/hoysong/philo) — POSIX 스레드와 뮤텍스를 이용한 동시성 제어
 
-## 3. 실행 환경
+## 4. 실행 환경
 
 이 프로젝트는 Linux와 X11 환경을 기준으로 작성되었습니다.
 
@@ -43,7 +49,7 @@ sudo apt update
 sudo apt install build-essential xorg libx11-dev libxext-dev zlib1g-dev libbsd-dev
 ```
 
-## 4. 빌드
+## 5. 빌드
 
 저장소를 받은 뒤 각 정적 라이브러리와 실행 파일을 순서대로 빌드합니다.
 
@@ -56,9 +62,9 @@ sh compile.sh
 
 빌드가 완료되면 현재 디렉터리에 `a.out`이 생성됩니다.
 
-## 5. 실행
+## 6. 실행
 
-### 5.1 랜덤 맵으로 실행
+### 6.1. 랜덤 맵으로 실행
 
 인자 없이 실행하면 화면 크기에 맞춘 랜덤 맵을 생성합니다.
 
@@ -66,7 +72,7 @@ sh compile.sh
 ./a.out
 ```
 
-### 5.2 맵 파일로 실행
+### 6.2. 맵 파일
 
 초기 상태가 정의된 `.gol` 파일의 경로를 인자로 전달할 수 있습니다.
 
@@ -76,7 +82,7 @@ sh compile.sh
 
 저장소에는 `test.gol`, `test2.gol`, `tornado.gol` 예제가 포함되어 있습니다.
 
-## 6. 조작법
+## 7. 조작법
 
 | 입력 | 동작 |
 | --- | --- |
@@ -85,7 +91,7 @@ sh compile.sh
 | `Esc` | 프로그램 종료 |
 | 창 닫기 버튼 | 프로그램 종료 |
 
-## 7. 맵 파일 형식
+## 8. 맵 파일 형식
 
 맵 파일은 같은 길이의 문자열을 행 단위로 작성합니다.
 
@@ -105,7 +111,7 @@ sh compile.sh
 
 맵의 가로·세로 크기에 셀 한 칸의 픽셀 크기를 곱한 값이 실행 창의 크기가 됩니다.
 
-## 8. 주요 설정
+## 9. 주요 설정
 
 다음 값은 헤더 파일에서 변경할 수 있습니다.
 
@@ -117,12 +123,13 @@ sh compile.sh
 
 설정 변경 후에는 `sh compile.sh`로 실행 파일을 다시 빌드해야 합니다.
 
-## 9. 프로젝트 구조
+## 10. 프로젝트 구조
 
 ```text
 .
 ├── README.md
 ├── README.ko.md
+├── PERFORMANCE_MEASUREMENT.md
 ├── video.gif
 └── my_game_of_life
     ├── main.c             # 프로그램 진입점과 입력 이벤트
@@ -136,7 +143,7 @@ sh compile.sh
     └── minilibx-linux     # MiniLibX
 ```
 
-## 10. Game of Life 규칙
+## 11. Game of Life 규칙
 
 각 셀의 다음 상태는 주변 8개 셀을 기준으로 결정됩니다.
 
